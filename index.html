@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <title>Joulukalenteri</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <h1>Joulukalenteri</h1>
+  <div id="ruudukko"></div>
+
+  <script>
+    const ruudukko = document.getElementById('ruudukko');
+    const nyt = new Date();
+    const kuukausi = nyt.getMonth(); 
+    const tanaan = nyt.getDate();
+
+    const paivat = Array.from({ length: 24 }, (_, i) => i + 1);
+
+    paivat.forEach(pv => {
+      const luukku = document.createElement('div');
+      luukku.className = 'luukku';
+      luukku.textContent = pv;
+
+      if (kuukausi === 11 && pv === tanaan) {
+        luukku.classList.add('tanaan');
+      }
+
+      if (kuukausi === 11 && pv > tanaan) {
+        luukku.classList.add('tuleva');
+        luukku.style.cursor = "not-allowed";
+      }
+
+      luukku.onclick = () => {
+        if (kuukausi === 11 && pv <= tanaan) {
+          luukku.classList.add('avattu');
+          luukku.innerHTML = `<img src="images/${pv}.jpg" alt="Luukku ${pv}">`;
+        }
+      };
+
+      ruudukko.appendChild(luukku);
+    });
+  </script>
+</body>
+</html>
